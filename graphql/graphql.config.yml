@@ -1,0 +1,7 @@
+schema: schema.graphql
+documents: '**/*.graphql'
+projects:
+  app:
+    extensions:
+      endpoints:
+        default: http://localhost:3000/graphql
