@@ -1,0 +1,496 @@
+# This file was generated. Do not edit manually.
+
+schema {
+    query: Query
+    mutation: Mutation
+}
+
+"Indicates exactly one field must be supplied and this field must not be `null`."
+directive @oneOf on INPUT_OBJECT
+
+type AuthPayload {
+    accessToken: String!
+    refreshToken: String!
+    user: User!
+}
+
+type DeleteManyResponse {
+    "The number of records deleted."
+    deletedCount: Int!
+}
+
+type Mutation {
+    addRefreshTokensToUser(input: AddRefreshTokensToUserInput!): User!
+    createManyUsers(input: CreateManyUsersInput!): [User!]!
+    createOneUser(input: CreateOneUserInput!): User!
+    deleteManyUsers(input: DeleteManyUsersInput!): DeleteManyResponse!
+    deleteOneUser(input: DeleteOneUserInput!): UserDeleteResponse!
+    login(loginInput: LoginInput!): AuthPayload!
+    logout(refreshToken: String!): Boolean!
+    logoutAll: Boolean!
+    refreshToken(refreshToken: String!): AuthPayload!
+    removeRefreshTokensFromUser(input: RemoveRefreshTokensFromUserInput!): User!
+    setRefreshTokensOnUser(input: SetRefreshTokensOnUserInput!): User!
+    signup(signupInput: SignupInput!): AuthPayload!
+    updateManyUsers(input: UpdateManyUsersInput!): UpdateManyResponse!
+    updateOneUser(input: UpdateOneUserInput!): User!
+}
+
+type OffsetPageInfo {
+    "true if paging forward and there are more records."
+    hasNextPage: Boolean
+    "true if paging backwards and there are more records."
+    hasPreviousPage: Boolean
+}
+
+type Query {
+    customUsers(
+        "Specify to filter the records returned."
+        filter: UserFilter! = {},
+        "Limit or page results."
+        paging: OffsetPaging! = {limit: 10},
+        "Specify to sort results."
+        sorting: [UserSort!]! = []
+    ): UserOffsetConnection!
+    hello: String!
+    protectedQuery: Float!
+    user(
+        "The id of the record to find."
+        id: ID!
+    ): User
+    users(
+        "Specify to filter the records returned."
+        filter: UserFilter! = {},
+        "Limit or page results."
+        paging: OffsetPaging! = {limit: 10},
+        "Specify to sort results."
+        sorting: [UserSort!]! = []
+    ): UserConnection!
+}
+
+type UpdateManyResponse {
+    "The number of records updated."
+    updatedCount: Int!
+}
+
+type User {
+    createdAt: DateTime!
+    createdBy: Float!
+    deletedAt: DateTime!
+    deletedBy: Float!
+    email: String!
+    id: ID!
+    refreshTokens(
+        "Specify to filter the records returned."
+        filter: UserRefreshTokenFilter! = {},
+        "Specify to sort results."
+        sorting: [UserRefreshTokenSort!]! = []
+    ): [UserRefreshToken!]!
+    updatedAt: DateTime!
+    updatedBy: Float!
+    username: String!
+}
+
+type UserAggregateGroupBy {
+    createdAt: DateTime
+    createdBy: Float
+    deletedAt: DateTime
+    deletedBy: Float
+    email: String
+    id: ID
+    updatedAt: DateTime
+    updatedBy: Float
+    username: String
+}
+
+type UserAvgAggregate {
+    createdBy: Float
+    deletedBy: Float
+    id: Float
+    updatedBy: Float
+}
+
+type UserConnection {
+    "Array of nodes."
+    nodes: [User!]!
+    "Paging information"
+    pageInfo: OffsetPageInfo!
+    "Fetch total count of records"
+    totalCount: Int!
+}
+
+type UserCountAggregate {
+    createdAt: Int
+    createdBy: Int
+    deletedAt: Int
+    deletedBy: Int
+    email: Int
+    id: Int
+    updatedAt: Int
+    updatedBy: Int
+    username: Int
+}
+
+type UserDeleteResponse {
+    createdAt: DateTime
+    createdBy: Float
+    deletedAt: DateTime
+    deletedBy: Float
+    email: String
+    id: ID
+    updatedAt: DateTime
+    updatedBy: Float
+    username: String
+}
+
+type UserMaxAggregate {
+    createdAt: DateTime
+    createdBy: Float
+    deletedAt: DateTime
+    deletedBy: Float
+    email: String
+    id: ID
+    updatedAt: DateTime
+    updatedBy: Float
+    username: String
+}
+
+type UserMinAggregate {
+    createdAt: DateTime
+    createdBy: Float
+    deletedAt: DateTime
+    deletedBy: Float
+    email: String
+    id: ID
+    updatedAt: DateTime
+    updatedBy: Float
+    username: String
+}
+
+type UserOffsetConnection {
+    "Array of nodes."
+    nodes: [User!]!
+    "Paging information"
+    pageInfo: OffsetPageInfo!
+}
+
+type UserRefreshToken {
+    createdAt: DateTime!
+    createdBy: Float!
+    deletedAt: DateTime!
+    deletedBy: Float!
+    id: ID!
+    refreshTokenHash: String!
+    updatedAt: DateTime!
+    updatedBy: Float!
+    userId: Float!
+}
+
+type UserSumAggregate {
+    createdBy: Float
+    deletedBy: Float
+    id: Float
+    updatedBy: Float
+}
+
+"Sort Directions"
+enum SortDirection {
+    ASC
+    DESC
+}
+
+"Sort Nulls Options"
+enum SortNulls {
+    NULLS_FIRST
+    NULLS_LAST
+}
+
+enum UserRefreshTokenSortFields {
+    createdAt
+    createdBy
+    deletedAt
+    deletedBy
+    id
+    refreshTokenHash
+    updatedAt
+    updatedBy
+    userId
+}
+
+enum UserSortFields {
+    createdAt
+    createdBy
+    deletedAt
+    deletedBy
+    email
+    id
+    updatedAt
+    updatedBy
+    username
+}
+
+"A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format."
+scalar DateTime
+
+input AddRefreshTokensToUserInput {
+    "The id of the record."
+    id: ID!
+    "The ids of the relations."
+    relationIds: [ID!]!
+}
+
+input CreateManyUsersInput {
+    "Array of records to create"
+    users: [CreateUserDTO!]!
+}
+
+input CreateOneUserInput {
+    "The record to create"
+    user: CreateUserDTO!
+}
+
+input CreateUserDTO {
+    email: String!
+    password: String!
+    username: String!
+}
+
+input DateFieldComparison {
+    between: DateFieldComparisonBetween
+    eq: DateTime
+    gt: DateTime
+    gte: DateTime
+    in: [DateTime!]
+    is: Boolean
+    isNot: Boolean
+    lt: DateTime
+    lte: DateTime
+    neq: DateTime
+    notBetween: DateFieldComparisonBetween
+    notIn: [DateTime!]
+}
+
+input DateFieldComparisonBetween {
+    lower: DateTime!
+    upper: DateTime!
+}
+
+input DeleteManyUsersInput {
+    "Filter to find records to delete"
+    filter: UserDeleteFilter!
+}
+
+input DeleteOneUserInput {
+    "The id of the record to delete."
+    id: ID!
+}
+
+input IDFilterComparison {
+    eq: ID
+    gt: ID
+    gte: ID
+    iLike: ID
+    in: [ID!]
+    is: Boolean
+    isNot: Boolean
+    like: ID
+    lt: ID
+    lte: ID
+    neq: ID
+    notILike: ID
+    notIn: [ID!]
+    notLike: ID
+}
+
+input LoginInput {
+    email: String!
+    password: String!
+}
+
+input NumberFieldComparison {
+    between: NumberFieldComparisonBetween
+    eq: Float
+    gt: Float
+    gte: Float
+    in: [Float!]
+    is: Boolean
+    isNot: Boolean
+    lt: Float
+    lte: Float
+    neq: Float
+    notBetween: NumberFieldComparisonBetween
+    notIn: [Float!]
+}
+
+input NumberFieldComparisonBetween {
+    lower: Float!
+    upper: Float!
+}
+
+input OffsetPaging {
+    "Limit the number of records returned"
+    limit: Int
+    "Offset to start returning records from"
+    offset: Int
+}
+
+input RemoveRefreshTokensFromUserInput {
+    "The id of the record."
+    id: ID!
+    "The ids of the relations."
+    relationIds: [ID!]!
+}
+
+input SetRefreshTokensOnUserInput {
+    "The id of the record."
+    id: ID!
+    "The ids of the relations."
+    relationIds: [ID!]!
+}
+
+input SignupInput {
+    email: String!
+    password: String!
+    username: String!
+}
+
+input StringFieldComparison {
+    eq: String
+    gt: String
+    gte: String
+    iLike: String
+    in: [String!]
+    is: Boolean
+    isNot: Boolean
+    like: String
+    lt: String
+    lte: String
+    neq: String
+    notILike: String
+    notIn: [String!]
+    notLike: String
+}
+
+input UpdateManyUsersInput {
+    "Filter used to find fields to update"
+    filter: UserUpdateFilter!
+    "The update to apply to all records found using the filter"
+    update: UpdateUser!
+}
+
+input UpdateOneUserInput {
+    "The id of the record to update"
+    id: ID!
+    "The update to apply."
+    update: UpdateUser!
+}
+
+input UpdateUser {
+    createdAt: DateTime
+    createdBy: Float
+    deletedAt: DateTime
+    deletedBy: Float
+    email: String
+    id: ID
+    updatedAt: DateTime
+    updatedBy: Float
+    username: String
+}
+
+input UserDeleteFilter {
+    and: [UserDeleteFilter!]
+    createdAt: DateFieldComparison
+    createdBy: NumberFieldComparison
+    deletedAt: DateFieldComparison
+    deletedBy: NumberFieldComparison
+    email: StringFieldComparison
+    id: IDFilterComparison
+    or: [UserDeleteFilter!]
+    updatedAt: DateFieldComparison
+    updatedBy: NumberFieldComparison
+    username: StringFieldComparison
+}
+
+input UserFilter {
+    and: [UserFilter!]
+    createdAt: DateFieldComparison
+    createdBy: NumberFieldComparison
+    deletedAt: DateFieldComparison
+    deletedBy: NumberFieldComparison
+    email: StringFieldComparison
+    id: IDFilterComparison
+    or: [UserFilter!]
+    refreshTokens: UserFilterUserRefreshTokenFilter
+    updatedAt: DateFieldComparison
+    updatedBy: NumberFieldComparison
+    username: StringFieldComparison
+}
+
+input UserFilterUserRefreshTokenFilter {
+    and: [UserFilterUserRefreshTokenFilter!]
+    createdAt: DateFieldComparison
+    createdBy: NumberFieldComparison
+    deletedAt: DateFieldComparison
+    deletedBy: NumberFieldComparison
+    id: IDFilterComparison
+    or: [UserFilterUserRefreshTokenFilter!]
+    refreshTokenHash: StringFieldComparison
+    updatedAt: DateFieldComparison
+    updatedBy: NumberFieldComparison
+    userId: NumberFieldComparison
+}
+
+input UserRefreshTokenFilter {
+    and: [UserRefreshTokenFilter!]
+    createdAt: DateFieldComparison
+    createdBy: NumberFieldComparison
+    deletedAt: DateFieldComparison
+    deletedBy: NumberFieldComparison
+    id: IDFilterComparison
+    or: [UserRefreshTokenFilter!]
+    refreshTokenHash: StringFieldComparison
+    updatedAt: DateFieldComparison
+    updatedBy: NumberFieldComparison
+    user: UserRefreshTokenFilterUserFilter
+    userId: NumberFieldComparison
+}
+
+input UserRefreshTokenFilterUserFilter {
+    and: [UserRefreshTokenFilterUserFilter!]
+    createdAt: DateFieldComparison
+    createdBy: NumberFieldComparison
+    deletedAt: DateFieldComparison
+    deletedBy: NumberFieldComparison
+    email: StringFieldComparison
+    id: IDFilterComparison
+    or: [UserRefreshTokenFilterUserFilter!]
+    updatedAt: DateFieldComparison
+    updatedBy: NumberFieldComparison
+    username: StringFieldComparison
+}
+
+input UserRefreshTokenSort {
+    direction: SortDirection!
+    field: UserRefreshTokenSortFields!
+    nulls: SortNulls
+}
+
+input UserSort {
+    direction: SortDirection!
+    field: UserSortFields!
+    nulls: SortNulls
+}
+
+input UserUpdateFilter {
+    and: [UserUpdateFilter!]
+    createdAt: DateFieldComparison
+    createdBy: NumberFieldComparison
+    deletedAt: DateFieldComparison
+    deletedBy: NumberFieldComparison
+    email: StringFieldComparison
+    id: IDFilterComparison
+    or: [UserUpdateFilter!]
+    updatedAt: DateFieldComparison
+    updatedBy: NumberFieldComparison
+    username: StringFieldComparison
+}
