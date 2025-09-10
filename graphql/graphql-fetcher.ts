@@ -9,8 +9,9 @@ export const graphlFetcher = <TData, TVariables extends FetcherVariables>(
   options?: RequestInit['headers']
 ): (() => Promise<TData>) => {
   return async () => {
-    if (process.env.GRAPHQL_URL === undefined) throw new Error('GRAPHQL_URL is not defined');
-    const client = new GraphQLClient(process.env.GRAPHQL_URL!, {
+    if (process.env.NEXT_PUBLIC_GRAPHQL_URL === undefined)
+      throw new Error('GRAPHQL_URL is not defined');
+    const client = new GraphQLClient(process.env.NEXT_PUBLIC_GRAPHQL_URL!, {
       headers: options,
     });
     const headers = {};

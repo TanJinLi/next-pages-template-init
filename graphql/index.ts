@@ -586,7 +586,11 @@ export type UserUpdateFilter = {
   username?: InputMaybe<StringFieldComparison>;
 };
 
-export type GetAllUsersQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetAllUsersQueryVariables = Exact<{
+  filter: UserFilter;
+  paging: OffsetPaging;
+  sorting: Array<UserSort> | UserSort;
+}>;
 
 
 export type GetAllUsersQuery = { __typename?: 'Query', users: { __typename?: 'UserConnection', nodes: Array<{ __typename?: 'User', username: string, email: string, id: string }> } };
@@ -594,8 +598,8 @@ export type GetAllUsersQuery = { __typename?: 'Query', users: { __typename?: 'Us
 
 
 export const GetAllUsersDocument = `
-    query GetAllUsers {
-  users {
+    query GetAllUsers($filter: UserFilter!, $paging: OffsetPaging!, $sorting: [UserSort!]!) {
+  users(filter: $filter, paging: $paging, sorting: $sorting) {
     nodes {
       username
       email
@@ -609,13 +613,13 @@ export const useGetAllUsersQuery = <
       TData = GetAllUsersQuery,
       TError = unknown
     >(
-      variables?: GetAllUsersQueryVariables,
+      variables: GetAllUsersQueryVariables,
       options?: Omit<UseQueryOptions<GetAllUsersQuery, TError, TData>, 'queryKey'> & { queryKey?: UseQueryOptions<GetAllUsersQuery, TError, TData>['queryKey'] }
     ) => {
     
     return useQuery<GetAllUsersQuery, TError, TData>(
       {
-    queryKey: variables === undefined ? ['GetAllUsers'] : ['GetAllUsers', variables],
+    queryKey: ['GetAllUsers', variables],
     queryFn: graphlFetcher<GetAllUsersQuery, GetAllUsersQueryVariables>(GetAllUsersDocument, variables),
     ...options
   }

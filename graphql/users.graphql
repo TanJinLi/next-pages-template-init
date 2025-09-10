@@ -1,5 +1,5 @@
-query GetAllUsers {
-    users {
+query GetAllUsers($filter: UserFilter!, $paging: OffsetPaging!, $sorting: [UserSort!]!) {
+    users (filter: $filter, paging: $paging, sorting: $sorting) {
         nodes {
             username
             email
